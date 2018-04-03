@@ -6,7 +6,7 @@ function sendMessage(message) {
     const producer = new kafka.Producer(client, { requireAcks: 1 });
     producer.on('ready', () => {
         producer.send([
-            { topic: 'test', partition: 0, messages: message }
+            { topic: 'demo', partition: 0, messages: message }
         ], (err, result) => {
             console.log(err || result);
         });
