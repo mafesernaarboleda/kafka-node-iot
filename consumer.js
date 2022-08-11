@@ -1,14 +1,20 @@
 
 const kafka = require('kafka-node');
+const nsolid = require('nsolid')
 
-const client = new kafka.Client('localhost:2181');
-const offset = new kafka.Offset(client);
+nsolid.start({
+  saas: '',
+  app: 'iot-consumer',
+  tracingEnabled: true
+})
+
+const client = new kafka.KafkaClient({ kafkaHost: 'localhost:9092' });
 const options = { groupId: 'kafka-node-iot', autoCommit: false, fetchMaxWaitMs: 1000, fetchMaxBytes: 1024 * 1024, fromOffset: true};
 
 const consumer = new kafka.Consumer(
     client,
-    [{ topic: 'demo', partition: 0, offset: 5}],
-     options);
+    [{ topic: 'nsolid-demo', partition: 0, offset: 5}],
+    options);
 
 consumer.on('message', (message) => {
   console.log(message);
